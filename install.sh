@@ -58,7 +58,16 @@ else
   info "Linked $TARGET_ZSHRC -> $SOURCE_ZSHRC"
 fi
 
-# 5. Summary & next steps
+# 5. Configure Antigravity CLI (agy) statusLine, title & notifications
+if [ -x "$DOTFILES_DIR/agy/install.sh" ] || [ -f "$DOTFILES_DIR/agy/install.sh" ]; then
+  if command -v python3 >/dev/null 2>&1; then
+    bash "$DOTFILES_DIR/agy/install.sh"
+  else
+    warn "python3 not found, skipping agy configuration."
+  fi
+fi
+
+# 6. Summary & next steps
 info "Done!"
 echo ""
 echo "Next steps:"

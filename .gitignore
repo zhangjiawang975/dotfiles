@@ -1,3 +1,5 @@
 .zshrc.local
 *.backup*
 .DS_Store
+__pycache__/
+*.pyc
