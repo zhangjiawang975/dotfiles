@@ -132,12 +132,22 @@ def main():
     line1 = []
     line2 = []
 
-    # Line 1: Agent state + Model │ Workspace / Repo + Git Branch │ Context Window
+    # Line 1: Agent state + Model │ Mode (Shift+Tab) │ Workspace / Repo + Git Branch │ Context Window
     state = (data.get("agent_state") or "idle").lower()
     dot_color = GREEN if state == "idle" else (RED if state == "error" else YELLOW)
     model_obj = data.get("model") or {}
     model_name = model_obj.get("display_name") or model_obj.get("id") or "No Model"
     line1.append(f"{dot_color}●{RESET} {BOLD}{CYAN}{model_name}{RESET}")
+
+    cycle_mode = (data.get("cycle_mode") or "default").lower()
+    if cycle_mode == "auto":
+        line1.append(f"{BOLD}{GREEN}▸▸ auto{RESET}")
+    elif cycle_mode == "accept-edits":
+        line1.append(f"{BOLD}{YELLOW}▸ accept-edits{RESET}")
+    elif cycle_mode == "plan":
+        line1.append(f"{BOLD}{MAGENTA}▪ plan{RESET}")
+    else:
+        line1.append(f"{DIM}{cycle_mode}{RESET}")
 
     ws = data.get("workspace") or {}
     cwd = ws.get("current_dir") or data.get("cwd") or ""
