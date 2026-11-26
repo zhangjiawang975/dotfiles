@@ -21,24 +21,34 @@
 
 ## 快速安装
 
-在新 Linux 机器上确保已安装 `zsh` 和 `git`，然后执行：
+克隆仓库到本地：
 
 ```bash
 git clone https://github.com/zhangjiawang975/dotfiles.git ~/dotfiles
+```
+
+### 一键安装全部
+
+```bash
 ~/dotfiles/install.sh
 ```
 
-如果只需要单独更新/安装 `agy` 的状态栏与标题配置，也可以直接执行：
+### 按需单独安装
+
+支持通过参数指定单个或多个模块（各模块依赖独立检查，例如仅装 `tmux` 不需要安装 `zsh`）：
 
 ```bash
-~/dotfiles/agy/install.sh
+~/dotfiles/install.sh zsh          # 仅安装 Oh My Zsh、插件与 .zshrc
+~/dotfiles/install.sh tmux         # 仅链接 .tmux.conf
+~/dotfiles/install.sh agy          # 仅配置 Antigravity CLI（也可直接运行 ~/dotfiles/agy/install.sh）
+~/dotfiles/install.sh zsh tmux     # 自由组合多个模块
+~/dotfiles/install.sh --help       # 查看所有可用参数
 ```
 
-安装脚本会自动完成：
-1. 浅克隆安装 Oh My Zsh（`~/.oh-my-zsh`）
-2. 安装第三方插件（`zsh-autosuggestions`、`zsh-syntax-highlighting`）
-3. 备份已有的 `~/.zshrc`、`~/.tmux.conf` 并软链接本仓库对应文件
-4. 配置 `agy` 状态栏、动态标题及通知提醒（`~/.gemini/antigravity-cli/settings.json`）
+各模块具体操作：
+- **`zsh`**：浅克隆安装 Oh My Zsh（`~/.oh-my-zsh`）、安装第三方插件、备份并软链接 `~/.zshrc`
+- **`tmux`**：备份并软链接 `~/.tmux.conf`
+- **`agy`**：配置 `agy` 状态栏、动态标题及通知提醒（`~/.gemini/antigravity-cli/settings.json`）
 
 安装完成后切换到 zsh：
 
