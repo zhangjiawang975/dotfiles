@@ -42,20 +42,29 @@ install_plugin() {
 install_plugin "zsh-autosuggestions" "https://github.com/zsh-users/zsh-autosuggestions.git"
 install_plugin "zsh-syntax-highlighting" "https://github.com/zsh-users/zsh-syntax-highlighting.git"
 
-# 4. Link .zshrc (backup existing file if needed)
-TARGET_ZSHRC="$HOME/.zshrc"
-SOURCE_ZSHRC="$DOTFILES_DIR/.zshrc"
+# 4. Link dotfiles (backup existing files if needed)
+link_file() {
+  local source_file="$1"
+  local target_file="$2"
 
-if [ -L "$TARGET_ZSHRC" ] && [ "$(readlink -f "$TARGET_ZSHRC")" = "$(readlink -f "$SOURCE_ZSHRC")" ]; then
-  info "$TARGET_ZSHRC is already linked to $SOURCE_ZSHRC."
-else
-  if [ -e "$TARGET_ZSHRC" ] || [ -L "$TARGET_ZSHRC" ]; then
-    BACKUP="$HOME/.zshrc.backup.$(date +%Y%m%d%H%M%S)"
-    warn "Backing up existing $TARGET_ZSHRC to $BACKUP"
-    mv "$TARGET_ZSHRC" "$BACKUP"
+  if [ -L "$target_file" ] && [ "$(readlink -f "$target_file")" = "$(readlink -f "$source_file")" ]; then
+    info "$target_file is already linked to $source_file."
+  else
+    if [ -e "$target_file" ] || [ -L "$target_file" ]; then
+      local backup="${target_file}.backup.$(date +%Y%m%d%H%M%S)"
+      warn "Backing up existing $target_file to $backup"
+      mv "$target_file" "$backup"
+    fi
+    ln -s "$source_file" "$target_file"
+    info "Linked $target_file -> $source_file"
   fi
-  ln -s "$SOURCE_ZSHRC" "$TARGET_ZSHRC"
-  info "Linked $TARGET_ZSHRC -> $SOURCE_ZSHRC"
+}
+
+link_file "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
+link_file "$DOTFILES_DIR/.tmux.conf" "$HOME/.tmux.conf"
+
+if ! command -v tmux >/dev/null 2>&1; then
+  warn "tmux not found; ~/.tmux.conf has been linked and will take effect once tmux is installed."
 fi
 
 # 5. Configure Antigravity CLI (agy) statusLine, title & notifications

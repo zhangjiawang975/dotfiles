@@ -13,6 +13,11 @@
   - `agy/statusline.sh`：自定义底部状态栏（显示模型、上下文用量、配额剩余与重置倒计时、Git 分支等）
   - `agy/title.sh`：终端标签页动态标题（显示思考中/执行中/等待确认/已完成状态 + 当前工作区名）
   - `agy/install.sh`：无损合并配置到 `~/.gemini/antigravity-cli/settings.json`（开启 `notifications` 响铃通知、`statusLine` 与 `title`，不覆盖原有权限和工作区设置）
+- **tmux 配置**（`.tmux.conf`）：
+  - 开启鼠标支持、真彩色（TrueColor）、低 ESC 延迟与 50000 行历史滚动
+  - 窗口/窗格编号从 1 开始并自动重排
+  - 便捷快捷键：`prefix + |` / `prefix + -` 沿当前目录分屏、`Alt + 方向键` 切换窗格、`Ctrl + 方向键` 调整大小、`prefix + r` 重载配置
+  - Nord 风格纯文本状态栏与窗格边框（不依赖 Nerd Font / 第三方插件）
 
 ## 快速安装
 
@@ -32,7 +37,7 @@ git clone https://github.com/zhangjiawang975/dotfiles.git ~/dotfiles
 安装脚本会自动完成：
 1. 浅克隆安装 Oh My Zsh（`~/.oh-my-zsh`）
 2. 安装第三方插件（`zsh-autosuggestions`、`zsh-syntax-highlighting`）
-3. 备份已有的 `~/.zshrc` 并软链接本仓库的 `.zshrc`
+3. 备份已有的 `~/.zshrc`、`~/.tmux.conf` 并软链接本仓库对应文件
 4. 配置 `agy` 状态栏、动态标题及通知提醒（`~/.gemini/antigravity-cli/settings.json`）
 
 安装完成后切换到 zsh：
